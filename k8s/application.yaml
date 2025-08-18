@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: crud-app        # ✅ Match with pipeline
-          image: softconsist/crud-123:v12
+          image: softconsist/crud-123:latest
           ports:
             - containerPort: 3000
 
