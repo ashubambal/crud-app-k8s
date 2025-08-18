@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: crud-app        # ✅ Match with pipeline
   labels:
-    app: app
+    app: crud-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: app
+      app: crud-app
   template:
     metadata:
       labels:
-        app: app
+        app: crud-app
     spec:
       containers:
-      - name: app
-        image: softconsist/crud-123:latest
-        ports:
-        - containerPort: 3000
+        - name: crud-app        # ✅ Match with pipeline
+          image: softconsist/crud-123:latest
+          ports:
+            - containerPort: 3000
+
