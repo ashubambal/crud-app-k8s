@@ -2,7 +2,6 @@
 
 A simple CRUD (Create, Read, Update, Delete) Node.js application with MySQL database hosted on AWS RDS. Jenkins is used for CI/CD pipeline and SonarCloud for static code analysis.
 
-
 ---
 
 ## 📋 Project Setup Guide
