@@ -1,57 +1,61 @@
-
-
-
 pipeline {
     agent any
-    
 
     environment {
-        SCANNER_HOME = tool 'sonar-scanner'
-        SONAR_TOKEN = credentials('sonar-token')
-        SONAR_ORGANIZATION = 'ashubambal'
-        SONAR_PROJECT_KEY = 'ashubambal'
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials')  // Jenkins credential ID
+        DOCKER_IMAGE = "softconsist/crud-123"
     }
 
     stages {
-        
-        stage('Code-Analysis') {
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('SonarCloud Analysis') {
             steps {
                 withSonarQubeEnv('SonarCloud') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner \
-  -Dsonar.organization=ashubambal \
-  -Dsonar.projectKey=ashubambal \
-  -Dsonar.sources=. \
-  -Dsonar.host.url=https://sonarcloud.io '''
+                    sh """
+                      sonar-scanner \
+                        -Dsonar.projectKey=ashubambal \
+                        -Dsonar.organization=ashubambal \
+                        -Dsonar.host.url=https://sonarcloud.io \
+                        -Dsonar.login=$SONAR_TOKEN
+                    """
                 }
             }
         }
-       
 
-        
-      
-       stage('Docker Build And Push') {
+        stage('Build & Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker-cred') {
-                        def buildNumber = env.BUILD_NUMBER ?: '1'
-                        def image = docker.build("softconsist/crud-123:latest")
-                        image.push()
-                    }
+                    def IMAGE_TAG = "${env.BUILD_NUMBER}"  // unique tag per Jenkins build
+                    sh """
+                      docker build -t $DOCKER_IMAGE:$IMAGE_TAG .
+                      docker build -t $DOCKER_IMAGE:latest .
+                      echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                      docker push $DOCKER_IMAGE:$IMAGE_TAG
+                      docker push $DOCKER_IMAGE:latest
+                    """
+
+                    // Save the tag for next stage
+                    env.IMAGE_TAG = IMAGE_TAG
                 }
             }
         }
-    
-       
-        stage('Deploy To EC2') {
+
+        stage('Deploy to Kubernetes') {
             steps {
                 script {
-                        sh 'docker rm -f $(docker ps -q) || true'
-                        sh 'docker run -d -p 3000:3000 softconsist/crud-123:latest'
-                        
-                    
+                    sh """
+                      # Update Deployment with new image (forces rolling update)
+                      kubectl set image deployment/crud-app crud-app=$DOCKER_IMAGE:$IMAGE_TAG --record
+                      kubectl apply -f k8s/svc.yaml
+                    """
                 }
             }
         }
-        
-}
+    }
 }

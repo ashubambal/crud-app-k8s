@@ -13,15 +13,21 @@ sudo apt install unzip -y
 
 # Download and install AWS CLI v2
 echo "Downloading AWS CLI v2..."
-curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
 
-echo "Unzipping AWS CLI installer..."
-unzip -q awscliv2.zip
+# Go to a safe directory
+cd ~/
 
-echo "Installing AWS CLI v2..."
-sudo ./aws/install
+# Remove old files if they exist
+rm -rf awscliv2.zip aws
 
-echo "AWS CLI v2 installation completed ✅"
+# Download the latest AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+# Unzip it
+unzip awscliv2.zip
+
+# Install or update
+sudo ./aws/install --update
 
 # Download the latest version of kubectl
 echo "Downloading latest kubectl release..."
