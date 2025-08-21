@@ -16,7 +16,7 @@ spec:
         app: crud-app
     spec:
       containers:
-        - name: crud        # ✅ Match with pipeline
+        - name: crud-app        # ✅ Match with pipeline
           image: softconsist/crud-123:latest
           imagePullPolicy: Always
           ports:
