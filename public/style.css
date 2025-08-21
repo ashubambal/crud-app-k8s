@@ -1,11 +1,9 @@
 /* === Base Styling === */
 body {
   font-family: 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #f6d365, #fda085), 
-              linear-gradient(225deg, #84fab0, #8fd3f4);
-  background-blend-mode: overlay;
-  background-size: 300% 300%;
-  animation: gradientShift1 15s ease infinite, gradientShift2 25s ease-in-out infinite;
+  background: linear-gradient(145deg, #6a11cb, #2575fc); /* Professional gradient */
+  background-size: 400% 400%; /* Smooth gradient animation */
+  animation: gradientShift 10s ease infinite;
   margin: 0;
   padding: 0;
   color: #333;
@@ -13,89 +11,87 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
-/* === Gradient Animations === */
-@keyframes gradientShift1 {
+/* === Gradient Animation === */
+@keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-@keyframes gradientShift2 {
-  0% { background-position: 50% 0%; }
-  50% { background-position: 50% 100%; }
-  100% { background-position: 50% 0%; }
-}
-
-/* === Title Animation === */
+/* === Title Styling === */
 h1 {
-  margin-top: 40px;
-  font-size: 2.5em;
+  margin-top: 50px;
+  font-size: 3em;
   color: #fff;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-  animation: fadeInSlide 2s ease forwards;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 2s ease forwards;
   opacity: 0;
 }
 
-/* === Buttons Layout === */
+/* === Button Container Styling === */
 .btn-container {
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
   justify-content: center;
-  animation: fadeInSlide 2.5s ease forwards;
+  animation: fadeIn 2.5s ease forwards;
   opacity: 0;
 }
 
-/* === Button Base Style === */
+/* === Button Base Styling === */
 button {
   border: none;
-  padding: 14px 24px;
+  padding: 14px 26px;
   font-size: 16px;
   font-weight: 600;
   color: white;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
 }
 
-/* === Button Colors === */
-.btn-create { background: #ff7e67; }
-.btn-add    { background: #28c76f; }
-.btn-get    { background: #00cfe8; }
-.btn-update { background: #7367f0; }
-.btn-delete { background: #ea5455; }
-.btn-clear  { background: #6c757d; }
+/* === Button Colors (Modern palette) === */
+.btn-create { background: #ff6f61; }  /* Coral */
+.btn-add    { background: #28a745; }  /* Green */
+.btn-get    { background: #007bff; }  /* Blue */
+.btn-update { background: #6f42c1; }  /* Purple */
+.btn-delete { background: #dc3545; }  /* Red */
+.btn-clear  { background: #6c757d; }  /* Gray */
 
+/* === Button Hover Effect === */
 button:hover {
-  transform: translateY(-5px) scale(1.06);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
-/* === Result Box === */
+/* === Result Box Styling === */
 #result {
-  margin-top: 40px;
-  padding: 25px;
+  margin-top: 50px;
+  padding: 30px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   width: 85%;
   max-width: 800px;
-  min-height: 120px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  min-height: 140px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   overflow-x: auto;
   white-space: pre-wrap;
   font-family: 'Courier New', monospace;
-  font-size: 15px;
-  color: #222;
-  animation: fadeInSlide 3s ease forwards;
+  font-size: 16px;
+  color: #333;
+  animation: fadeIn 3s ease forwards;
   opacity: 0;
 }
 
-/* === Animations === */
-@keyframes fadeInSlide {
+/* === Fade In Animation === */
+@keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
