@@ -19,6 +19,7 @@ const db = mysql.createConnection({
     database: 'testdb-1' // ✅ Use actual DB name, avoid using instance ID
 });
 
+
 // Connect to MySQL
 db.connect((err) => {
     if (err) throw err;
