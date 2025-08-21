@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crud-app        # ✅ Match with pipeline
+  namespace: crud-app
   labels:
     app: crud-app
 spec:
